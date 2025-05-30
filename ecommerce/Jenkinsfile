@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('checkout'){
             steps{
-                git branch: 'Django-application', url:'https://github.com/DeepikaVKale/reimagined-journey.git'
+                git branch: 'DJango-application', url:'https://github.com/DeepikaVKale/reimagined-journey.git'
             }
         }
         stage('Docker image build'){
