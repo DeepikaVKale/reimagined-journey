@@ -17,6 +17,8 @@ pipeline{
         stage('Containerisation'){
             steps{
                 sh'''
+                docker stop c-django
+                docker rm c-django
                 docker run -it -d --name c-django -p 8000:8080 DeepikaVKale/django-application:1
                 ''' 
             }
