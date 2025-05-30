@@ -1,41 +1,38 @@
 pipeline{
-    agent any 
+    agent any
     stages{
         stage('checkout'){
             steps{
-                git branch: 'DJango-application', url:'https://github.com/ManojKRISHNAPPA/reimagined-journey.git'
+                git branch: 'Django-application', url:'https://github.com/DeepikaVKale/reimagined-journey.git'
             }
         }
-
         stage('Docker image build'){
             steps{
-
-                sh '''
-                cd ecommerce
-                docker build -t manojkrishnappa/djano-application:1 .
+                sh'''
+                cd ecommerce 
+                docker build -t DeepikaVKale/django-application:1 . 
                 '''
             }
         }
-        stage('Containersation'){
+        stage('Containerisation'){
             steps{
-                sh '''
-                    docker run -it -d -p 8000:8000 manojkrishnappa/djano-application:1
-                '''
+                sh'''
+                docker run -it -d --name c-django -p 8000:8080 DeepikaVKale/django-application:1
+                ''' 
             }
-        } 
-        stage('Login to Docker Hub') {
-                    steps {
-                        script {
-                            withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                                sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
-                            }
-                        }
-                    }
-        } 
+        }
+        stage('Login to Docker Hub'){
+            steps{
+                script{
+                    withCredentials ([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')])
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                }
+            }
+        }
         stage('Pushing image to repository'){
             steps{
-                sh 'docker push manojkrishnappa/djano-application:1'
+                sh 'docker push DeepikaVKale/django-application:1'
             }
-        }                     
+        }
     }
 }
