@@ -19,7 +19,7 @@ pipeline{
                 sh'''
                 docker stop c-django
                 docker rm c-django
-                docker run -it -d --name c-django -p 8000:8080 deepikavkale/django-application:1
+                docker run -it -d --name c-django -p 8000:8000 deepikavkale/django-application:1
                 ''' 
             }
         }
